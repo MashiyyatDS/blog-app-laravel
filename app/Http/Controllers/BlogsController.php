@@ -29,13 +29,16 @@ class BlogsController extends Controller
 
     public function find($id)
     {
-        $blog = Blog::findOrFail($id);
+        $blog = Blog::findOrFail($id)->with('tags')->get();
         return response()->json(['blog' => $blog]);
     }
 
-    public function blogs()
+    public function blogs($paginate, $category)
     {
-        $blogs = Blog::orderBy('created_at', 'DESC')->with('tags')->paginate(12);
+        $blogs = Blog::orderBy('created_at', 'DESC')
+                     ->where(['category' => $category])
+                     ->with('tags')
+                     ->paginate($paginate);
         return response()->json(['blogs' => $blogs]);
     }
 

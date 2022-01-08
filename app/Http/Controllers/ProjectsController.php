@@ -29,13 +29,13 @@ class ProjectsController extends Controller
 
     public function find($id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::with('tags')->findOrFail($id);
         return response()->json(['project' => $project]);
     }
 
-    public function projects()
+    public function projects($limit)
     {
-        $projects = Project::orderBy('created_at', 'DESC')->with('tags')->paginate(4);
+        $projects = Project::orderBy('created_at', 'DESC')->with('tags')->paginate($limit);
         return response()->json(['projects' => $projects]);
     }
 

@@ -19,6 +19,9 @@ class Project extends Model
         'user_id'
     ];
 
+    protected $casts = [
+        'created_at' => 'date: M d, Y - H:i A'
+    ];
     
     protected static function boot()
     {

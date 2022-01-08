@@ -20,7 +20,7 @@ Route::group(['prefix' => 'blogs'], function() {
         Route::put('/{id}', [BlogsController::class, 'update']);
         Route::get('/{id}', [BlogsController::class, 'find']);
     // });
-    Route::get('/', [BlogsController::class, 'blogs']);
+    Route::get('/paginate={paginate}/category={category}', [BlogsController::class, 'blogs']);
 });
 
 Route::group(['prefix' => 'tags'], function() {
@@ -32,7 +32,7 @@ Route::group(['prefix' => 'projects'], function() {
     Route::delete('/{id}', [ProjectsController::class, 'delete']);
     Route::put('/{id}', [ProjectsController::class, 'update']);
     Route::get('/{id}', [ProjectsController::class, 'find']);
-    Route::get('/', [ProjectsController::class, 'projects']);
+    Route::get('/limit/{limit}', [ProjectsController::class, 'projects']);
 });
 
 Route::group(['prefix' => 'project-tags'], function() {
