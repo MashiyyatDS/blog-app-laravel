@@ -35,7 +35,7 @@ class BlogsController extends Controller
 
     public function blogs()
     {
-        $blogs = Blog::orderBy('created_at', 'DESC')->paginate(12);
+        $blogs = Blog::orderBy('created_at', 'DESC')->with('tags')->paginate(12);
         return response()->json(['blogs' => $blogs]);
     }
 

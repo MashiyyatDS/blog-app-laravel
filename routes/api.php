@@ -14,12 +14,12 @@ Route::group(['prefix' => 'users'], function() {
 });
 
 Route::group(['prefix' => 'blogs'], function() {
-    Route::group(['middleware' => 'auth:sanctum'], function() {
+    // Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::post('/', [BlogsController::class, 'create']);
         Route::delete('/{id}', [BlogsController::class, 'delete']);
         Route::put('/{id}', [BlogsController::class, 'update']);
         Route::get('/{id}', [BlogsController::class, 'find']);
-    });
+    // });
     Route::get('/', [BlogsController::class, 'blogs']);
 });
 

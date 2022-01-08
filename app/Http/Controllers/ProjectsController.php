@@ -35,7 +35,7 @@ class ProjectsController extends Controller
 
     public function projects()
     {
-        $projects = Project::orderBy('created_at', 'DESC')->paginate(8);
+        $projects = Project::orderBy('created_at', 'DESC')->with('tags')->paginate(4);
         return response()->json(['projects' => $projects]);
     }
 
