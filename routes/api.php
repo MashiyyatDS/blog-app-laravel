@@ -9,8 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'users'], function() {
+    Route::group(['middleware' => 'auth:sanctum'], function() {
+        Route::get('/', [LoginController::class, 'currentUser']);
+        Route::post('/logout', [LoginController::class, 'logout']);
+    });
     Route::post('/', [LoginController::class, 'login']);
-    Route::post('/logout', [LoginController::class, 'logout']);
 });
 
 Route::group(['prefix' => 'blogs'], function() {
@@ -21,6 +24,7 @@ Route::group(['prefix' => 'blogs'], function() {
         Route::get('/{id}', [BlogsController::class, 'find']);
     // });
     Route::get('/paginate={paginate}/category={category}', [BlogsController::class, 'blogs']);
+    Route::get('/slug/{slug}', [BlogsController::class, 'viewBlog']);
 });
 
 Route::group(['prefix' => 'tags'], function() {
@@ -33,6 +37,8 @@ Route::group(['prefix' => 'projects'], function() {
     Route::put('/{id}', [ProjectsController::class, 'update']);
     Route::get('/{id}', [ProjectsController::class, 'find']);
     Route::get('/limit/{limit}', [ProjectsController::class, 'projects']);
+    Route::get('/search/{name}', [ProjectsController::class, 'search']);
+    Route::get('/slug/{slug}', [ProjectsController::class, 'viewProject']);
 });
 
 Route::group(['prefix' => 'project-tags'], function() {

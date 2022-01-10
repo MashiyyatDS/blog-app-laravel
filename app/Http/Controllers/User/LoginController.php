@@ -32,4 +32,11 @@ class LoginController extends Controller
         auth('sanctum')->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out']);
     }
+
+    public function currentUser(Request $request)
+    {
+        return response()->json([
+            'user' => $request->user()
+        ]);
+    }
 }

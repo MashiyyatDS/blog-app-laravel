@@ -29,7 +29,7 @@ class BlogsController extends Controller
 
     public function find($id)
     {
-        $blog = Blog::findOrFail($id)->with('tags')->get();
+        $blog = Blog::with('tags')->findOrFail($id);
         return response()->json(['blog' => $blog]);
     }
 
@@ -40,6 +40,12 @@ class BlogsController extends Controller
                      ->with('tags')
                      ->paginate($paginate);
         return response()->json(['blogs' => $blogs]);
+    }
+
+    public function viewBlog($slug)
+    {
+        $blog = Blog::with('tags')->where(['slug' => $slug])->first();
+        return response()->json(['blog' => $blog]);
     }
 
 }
