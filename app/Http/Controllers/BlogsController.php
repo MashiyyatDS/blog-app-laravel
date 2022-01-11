@@ -10,7 +10,8 @@ class BlogsController extends Controller
 
     public function create(Request $request)
     {
-        $blog = Blog::create($request->all());
+        $user = $request->user();
+        $blog = Blog::create($request->all() + ['user_id' => $user->id]);
         return response()->json(['blog' => $blog]);
     }
 
@@ -38,6 +39,7 @@ class BlogsController extends Controller
         $blogs = Blog::orderBy('created_at', 'DESC')
                      ->where(['category' => $category])
                      ->with('tags')
+                     ->with('user')
                      ->paginate($paginate);
         return response()->json(['blogs' => $blogs]);
     }
@@ -45,7 +47,11 @@ class BlogsController extends Controller
     public function viewBlog($slug)
     {
         $blog = Blog::with('tags')->where(['slug' => $slug])->first();
-        return response()->json(['blog' => $blog]);
+        if($blog) {
+            return response()->json(['blog' => $blog]);
+        } else {
+            return response()->json(['message' => 'Blog not found'], 404);
+        }
     }
 
 }

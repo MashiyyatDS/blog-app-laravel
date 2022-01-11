@@ -17,12 +17,12 @@ Route::group(['prefix' => 'users'], function() {
 });
 
 Route::group(['prefix' => 'blogs'], function() {
-    // Route::group(['middleware' => 'auth:sanctum'], function() {
+    Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::post('/', [BlogsController::class, 'create']);
         Route::delete('/{id}', [BlogsController::class, 'delete']);
         Route::put('/{id}', [BlogsController::class, 'update']);
-        Route::get('/{id}', [BlogsController::class, 'find']);
-    // });
+    });
+    Route::get('/{id}', [BlogsController::class, 'find']);
     Route::get('/paginate={paginate}/category={category}', [BlogsController::class, 'blogs']);
     Route::get('/slug/{slug}', [BlogsController::class, 'viewBlog']);
 });
@@ -32,9 +32,12 @@ Route::group(['prefix' => 'tags'], function() {
 });
 
 Route::group(['prefix' => 'projects'], function() {
-    Route::post('/', [ProjectsController::class, 'create']);
-    Route::delete('/{id}', [ProjectsController::class, 'delete']);
-    Route::put('/{id}', [ProjectsController::class, 'update']);
+    Route::group(['middleware' => 'auth:sanctum'], function() {
+        Route::post('/', [ProjectsController::class, 'create']);
+        Route::delete('/{id}', [ProjectsController::class, 'delete']);
+        Route::put('/{id}', [ProjectsController::class, 'update']);
+        Route::put('/{id}/project-tags', [ProjectTagsController::class, 'update']);
+    });
     Route::get('/{id}', [ProjectsController::class, 'find']);
     Route::get('/limit/{limit}', [ProjectsController::class, 'projects']);
     Route::get('/search/{name}', [ProjectsController::class, 'search']);

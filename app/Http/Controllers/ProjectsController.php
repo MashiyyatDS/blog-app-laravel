@@ -10,7 +10,8 @@ class ProjectsController extends Controller
     
     public function create(Request $request)
     {
-        $project = Project::create($request->all());
+        $user = $request->user();
+        $project = Project::create($request->all() + ['user_id' => $user->id]);
         return response()->json(['project' => $project]);
     }
 
