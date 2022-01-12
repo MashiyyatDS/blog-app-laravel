@@ -12,6 +12,7 @@ Route::group(['prefix' => 'users'], function() {
     Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::get('/', [LoginController::class, 'currentUser']);
         Route::post('/logout', [LoginController::class, 'logout']);
+        Route::get('/dashboard', [LoginController::class, 'dashboard']);
     });
     Route::post('/', [LoginController::class, 'login']);
 });

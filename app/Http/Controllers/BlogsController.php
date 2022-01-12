@@ -41,7 +41,10 @@ class BlogsController extends Controller
                          ->with('tags')
                          ->with('user')
                          ->paginate($paginate);
-            return response()->json(['blogs' => $blogs]);
+            return response()->json([
+                'blogs' => $blogs,
+                'blogCount' => Blog::count()
+            ]);
         }else {
             $blogs = Blog::orderBy('created_at', 'DESC')
                          ->where(['category' => $category])

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Blog;
+use App\Models\Project;
 
 class LoginController extends Controller
 {
@@ -37,6 +39,18 @@ class LoginController extends Controller
     {
         return response()->json([
             'user' => $request->user()
+        ]);
+    }
+
+    public function dashboard() 
+    {
+        $blogs = Blog::where(['category' => 'blog'])->count();
+        $artworks = Blog::where(['category' => 'artwork'])->count();
+        $projects = Project::count();
+        return response()->json([
+            'blogs' => $blogs,
+            'artworks' => $artworks,
+            'projects' => $projects
         ]);
     }
 }
