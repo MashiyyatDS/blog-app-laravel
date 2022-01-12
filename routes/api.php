@@ -21,6 +21,7 @@ Route::group(['prefix' => 'blogs'], function() {
         Route::post('/', [BlogsController::class, 'create']);
         Route::delete('/{id}', [BlogsController::class, 'delete']);
         Route::put('/{id}', [BlogsController::class, 'update']);
+        Route::put('{id}/tags', [TagsController::class, 'update']);
     });
     Route::get('/{id}', [BlogsController::class, 'find']);
     Route::get('/paginate={paginate}/category={category}', [BlogsController::class, 'blogs']);

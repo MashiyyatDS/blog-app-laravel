@@ -36,12 +36,20 @@ class BlogsController extends Controller
 
     public function blogs($paginate, $category)
     {
-        $blogs = Blog::orderBy('created_at', 'DESC')
-                     ->where(['category' => $category])
-                     ->with('tags')
-                     ->with('user')
-                     ->paginate($paginate);
-        return response()->json(['blogs' => $blogs]);
+        if($category == "all") {
+            $blogs = Blog::orderBy('created_at', 'DESC')
+                         ->with('tags')
+                         ->with('user')
+                         ->paginate($paginate);
+            return response()->json(['blogs' => $blogs]);
+        }else {
+            $blogs = Blog::orderBy('created_at', 'DESC')
+                         ->where(['category' => $category])
+                         ->with('tags')
+                         ->with('user')
+                         ->paginate($paginate);
+            return response()->json(['blogs' => $blogs]);
+        }
     }
 
     public function viewBlog($slug)
