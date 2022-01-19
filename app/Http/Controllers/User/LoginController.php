@@ -53,4 +53,18 @@ class LoginController extends Controller
             'projects' => $projects
         ]);
     }
+
+    public function updateUser(Request $request)
+    {
+        $user = $request->user();
+        $user->update($request->all());
+        return response()->json(['user' => $user]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        // $this->validate($request, [
+        //     ''
+        // ]);
+    }
 }

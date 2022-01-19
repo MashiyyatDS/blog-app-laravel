@@ -13,6 +13,7 @@ Route::group(['prefix' => 'users'], function() {
         Route::get('/', [LoginController::class, 'currentUser']);
         Route::post('/logout', [LoginController::class, 'logout']);
         Route::get('/dashboard', [LoginController::class, 'dashboard']);
+        Route::put('/', [LoginController::class, 'updateUser']);
     });
     Route::post('/', [LoginController::class, 'login']);
 });
