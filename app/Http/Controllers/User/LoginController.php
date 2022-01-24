@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Blog;
 use App\Models\Project;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -63,8 +64,17 @@ class LoginController extends Controller
 
     public function resetPassword(Request $request)
     {
-        // $this->validate($request, [
-        //     ''
-        // ]);
+        $user = $request->user();
+        $this->validate($request, [
+            'current_password' => 'required',
+            'password' => 'required|confirmed',
+        ]);
+
+        if(Hash::check($request->current_password, $user->password)) {
+            $user->update(['password' => Hash::make($request->password)]);
+            return response()->json(['message' => 'Password updated']);
+        } else {
+            return response()->json(['message' => 'Invalid user password'], 422);
+        }
     }
 }

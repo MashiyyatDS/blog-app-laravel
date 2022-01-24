@@ -14,6 +14,7 @@ Route::group(['prefix' => 'users'], function() {
         Route::post('/logout', [LoginController::class, 'logout']);
         Route::get('/dashboard', [LoginController::class, 'dashboard']);
         Route::put('/', [LoginController::class, 'updateUser']);
+        Route::put('/reset-password', [LoginController::class, 'resetPassword']);
     });
     Route::post('/', [LoginController::class, 'login']);
 });
