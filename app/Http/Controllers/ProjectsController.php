@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 
 class ProjectsController extends Controller
 {
     
-    public function create(Request $request)
+    public function create(ProjectRequest $request)
     {
-        $user = $request->user();
-        $project = Project::create($request->all() + ['user_id' => $user->id]);
+        $project = $request->user()->projects()->create($request->all());
         return response()->json(['project' => $project]);
     }
 

@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
 
 class BlogsController extends Controller
 {
 
-    public function create(Request $request)
+    public function create(BlogRequest $request)
     {
-        $user = $request->user();
-        $blog = Blog::create($request->all() + ['user_id' => $user->id]);
+        $blog = $request->user()->blogs()->create($request->all());
         return response()->json(['blog' => $blog]);
     }
 
@@ -57,7 +57,7 @@ class BlogsController extends Controller
 
     public function viewBlog($slug)
     {
-        $blog = Blog::with('tags')->where(['slug' => $slug])->first();
+        $blog = Blog::with('user')->with('tags')->where(['slug' => $slug])->first();
         if($blog) {
             return response()->json(['blog' => $blog]);
         } else {

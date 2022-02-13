@@ -22,7 +22,8 @@ class Blog extends Model
     ];
 
     protected $attributes = [
-        'isNsfw' => false
+        'isNsfw' => false,
+        'content' => '...'
     ];
 
     protected $casts = [

@@ -5,7 +5,6 @@ use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ProjectTagsController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\User\LoginController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'users'], function() {
