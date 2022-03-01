@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\ProjectImagesController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ProjectTagsController;
 use App\Http\Controllers\TagsController;
@@ -49,4 +50,8 @@ Route::group(['prefix' => 'projects'], function() {
 
 Route::group(['prefix' => 'project-tags'], function() {
     Route::post('/', [ProjectTagsController::class, 'create']);
+});
+
+Route::group(['prefix' => 'project-images'], function() {
+    Route::post('/', [ProjectImagesController::class, 'create']);
 });

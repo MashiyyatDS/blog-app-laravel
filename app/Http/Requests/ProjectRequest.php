@@ -28,7 +28,7 @@ class ProjectRequest extends FormRequest
             'description' => 'required',
             'link' => 'required',
             'repository' => 'required',
-            'image' => 'required'
+            'images' => 'min:1'
         ];
     }
 
@@ -38,7 +38,7 @@ class ProjectRequest extends FormRequest
             'title.required' => 'Project title is required',
             'description' => 'Project description is required',
             'link.required' => 'Project link is required',
-            'image.required' => 'Project image is required'
+            'images.min' => 'Please put some image'
         ];
     }
 }

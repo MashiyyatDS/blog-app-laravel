@@ -36,7 +36,11 @@ class ProjectsController extends Controller
 
     public function projects($limit)
     {
-        $projects = Project::orderBy('created_at', 'DESC')->with('tags')->with('user')->paginate($limit);
+        $projects = Project::orderBy('created_at', 'DESC')
+                            ->with('tags')
+                            ->with('images')
+                            ->with('user')
+                            ->paginate($limit);
         return response()->json(['projects' => $projects]);
     }
 
@@ -48,7 +52,7 @@ class ProjectsController extends Controller
 
     public function viewProject($slug)
     {
-        $project = Project::with('tags')->where(['slug' => $slug])->first();
+        $project = Project::with('tags')->with('images')->where(['slug' => $slug])->first();
         if($project) {
             return response()->json(['project' => $project]);
         } else {

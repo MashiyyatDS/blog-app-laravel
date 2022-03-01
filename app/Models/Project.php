@@ -19,6 +19,10 @@ class Project extends Model
         'user_id'
     ];
 
+    protected $attributes = [
+        'image' => 'none'
+    ];
+
     protected $casts = [
         'created_at' => 'date: M d, Y - H:i A'
     ];
@@ -39,5 +43,10 @@ class Project extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProjectImage::class, 'project_id');
     }
 }
