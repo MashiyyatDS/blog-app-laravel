@@ -1,13 +1,18 @@
 type User {
     id: ID
+    name: String @method(name: "name")
     firstname: String
     lastname: String
     email: String
     created_at: DateTime
     updated_at: DateTime
     blogs: [Blog] @hasMany(type: CONNECTION)
+    projects: [Project] @hasMany(type: CONNECTION)
+    images: [Image] @morphMany
+    latestImage: Image @method(name: "latestImage")
 }
 
+# Queries
 extend type Query {
     user(id: ID): User @find
     usersRelay: [User] @paginate(type: CONNECTION)
@@ -16,4 +21,16 @@ extend type Query {
 # Connect to single user relation
 input ConnectUserRelation {
     connect: ID
+}
+
+input UserInput {
+    id: ID
+    firstname: String
+    lastname: String
+    email: String
+    password: String
+}
+
+extend type Mutation {
+    upsertUser(input: UserInput @spread): User @upsert
 }

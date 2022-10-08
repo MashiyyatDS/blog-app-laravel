@@ -4,20 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Project extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'title',
-        'description',
-        'link',
-        'repository',
-        'image',
-        'slug',
-        'user_id'
-    ];
 
     protected $attributes = [
         'image' => 'none'
@@ -26,12 +17,12 @@ class Project extends Model
     protected $casts = [
         'created_at' => 'date: M d, Y - H:i A'
     ];
-    
+
     protected static function boot()
     {
         parent::boot();
-        static::creating(function($project) {
-            $project->slug = 'project-'.rand().$project->id.time();
+        static::creating(function ($project) {
+            $project->slug = 'project-' . rand() . $project->id . time();
         });
     }
 
@@ -40,9 +31,9 @@ class Project extends Model
         return $this->hasMany(ProjectTag::class, 'project_id');
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function images()

@@ -1,0 +1,29 @@
+type Project {
+    id: ID
+    title: String
+    description: String
+    link: String
+    repository: String
+    slug: String
+    user: User @belongsTo
+}
+
+extend type Query {
+    project(id: ID!): Project @find
+    projects: [Project] @all
+    projectsRelay: [Project] @paginate(type: CONNECTION)
+}
+
+input ProjectInput {
+    id: ID
+    title: String
+    description: String
+    link: String
+    repository: String
+    user: ConnectUserRelation
+}
+
+extend type Mutation {
+    upsertProject(input: ProjectInput @spread): Project @upsert
+    deleteProject(id: ID! @eq): Project @delete
+}

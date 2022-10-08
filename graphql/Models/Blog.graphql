@@ -7,6 +7,7 @@ type Blog {
     category: String
     slug: String
     user: User @belongsTo
+    images: [Image] @morphMany(type: CONNECTION)
 }
 
 extend type Query {
@@ -27,4 +28,8 @@ input BlogInput {
     category: String
     slug: String
     user: ConnectUserRelation
+}
+
+input ConnectBlogRelation {
+    connect: ID
 }

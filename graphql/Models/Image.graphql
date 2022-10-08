@@ -1,0 +1,21 @@
+type Image {
+    id: ID
+    filename: String
+    url: String
+    created_at: String
+    deleted_at: String
+    imageable: Imageable! @morphTo
+}
+
+union Imageable = Blog | Project | User
+
+input ImageInput {
+    id: ID
+    filename: String
+    url: String
+    imageable: ConnectMorphToRelation
+}
+
+extend type Mutation {
+    upsertImage(input: ImageInput @spread): Image @upsert
+}
