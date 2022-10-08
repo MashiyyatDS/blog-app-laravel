@@ -1,0 +1,30 @@
+type Blog {
+    id: ID
+    title: String
+    content: String
+    image: String
+    isNsfw: Boolean
+    category: String
+    slug: String
+    user: User @belongsTo
+}
+
+extend type Query {
+    blog(id: ID!): Blog @find
+    blogsRelay: [Blog] @paginate(type: CONNECTION)
+}
+
+extend type Mutation {
+    upsertBlog(input: BlogInput @spread): Blog @upsert
+}
+
+input BlogInput {
+    id: ID
+    title: String!
+    content: String!
+    image: String
+    isNsfw: Boolean
+    category: String
+    slug: String
+    user: ConnectUserRelation
+}

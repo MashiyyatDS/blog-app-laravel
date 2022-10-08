@@ -1,0 +1,19 @@
+type User {
+    id: ID
+    firstname: String
+    lastname: String
+    email: String
+    created_at: DateTime
+    updated_at: DateTime
+    blogs: [Blog] @hasMany(type: CONNECTION)
+}
+
+extend type Query {
+    user(id: ID): User @find
+    usersRelay: [User] @paginate(type: CONNECTION)
+}
+
+# Connect to single user relation
+input ConnectUserRelation {
+    connect: ID
+}
